@@ -1,0 +1,52 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model UserEditForm
+@{
+	ViewData["Title"] = "Edit user";
+	var roles = ViewData["roles"] as List<IdentityRole<int>>;
+	var users = ViewData["user"] as User;
+}
+
+<div class="text-center">
+    <h1 class="display-4">Edit user</h1>
+</div>
+<div class="row">
+	<div class="col-md-4 offset-md-4">
+		<div class="card">
+			<div class="card-body">
+				<form method="post" enctype="multipart/form-data">
+					<div class="mb-3">
+						@users.Email
+					</div>
+					<div class="mb-3">
+						@Html.LabelFor(m => m.Password, new { @class = "form-label" })
+						@Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
+						@Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+					</div>
+					<div class="mb-3">
+						@Html.LabelFor(m => m.ConfirmPassword, new { @class = "form-label" })
+						@Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "Password" })
+						@Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+					</div>
+					<div class="mb-3">
+						<h5>Roles</h5>
+						<table class="table table-hover">
+							@foreach (var role in roles)
+							{
+								<tr>
+									<td>@role.Name</td>
+									<td>
+										<input type="checkbox"
+											   value="@role.Name"
+											   name="UserRoles[]" @(Model.UserRoles.Contains(role.Name) ? "checked" : null)>
+									</td>
+								</tr>
+							}
+						</table>
+					</div>
+					<button class="btn btn-success" type="submit">Save</button>
+					<a asp-area="Auth" asp-action="Index" asp-controller="User" class="btn btn-outline-secondary">Return</a>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

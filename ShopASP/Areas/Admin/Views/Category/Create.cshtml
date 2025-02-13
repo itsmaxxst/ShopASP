@@ -1,0 +1,25 @@
+﻿@model Category
+@{
+    ViewData["Title"] = "Create Category";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Create Category</h1>
+</div>
+<a asp-area="Admin" asp-action="Index" asp-controller="Category" class="btn btn-outline-secondary">Cancel</a>
+<div class="card">
+	<div class="card-body">
+		<form method="post" enctype="multipart/form-data">
+			<div class="mb-3">
+				@Html.LabelFor(m => m.Title, new { @class = "form-label" })
+				@Html.TextBoxFor(m => m.Title, new { @class = "form-control", placeholder = "Title" })
+				@Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
+			</div>
+			<div class="mb-3">
+				@Html.Label("Image", null, new { @class = "form-label" })
+				@Html.TextBox("image", null, new { accept = ".jpg,.png,.jpeg", type = "file", @class = "form-control" })
+			</div>
+			<button class="btn btn-success" type="submit">Save</button>
+		</form>
+	</div>
+</div>

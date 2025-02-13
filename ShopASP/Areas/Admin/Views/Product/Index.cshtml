@@ -1,0 +1,47 @@
+﻿@model List<Product>
+@{
+    ViewData["Title"] = "Products";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Products</h1>
+</div>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <td>Id</td>
+            <td></td>
+            <td>Title</td>
+            <td>Category</td>
+            <td>Price</td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var product in Model)
+        {
+            <tr>
+                <td>@product.Id</td>
+                <td>
+                    @if (product.Photo != null)
+                    {
+                        <img class="img-fluid" src="@product.Photo.Url" alt="@product.Title" title="@product.Title" />
+                    }
+                </td>
+                <td>@product.Title</td>
+                <td>@product.Category.Title</td>
+                <td>@product.Price</td>
+                <td>
+                    <div class="d-flex">
+                        <a asp-area="Admin" asp-action="Edit" asp-controller="Product" asp-route-id="@product.Id" class="btn btn-outline-primary">Edit</a>
+                        <form method="post" asp-area="Admin" asp-action="Delete" asp-controller="Product" asp-route-id=" @product.Id">
+                            <button style="margin-left:5px" type="submit" class="btn btn-outline-danger">Delete</button>
+                        </form>
+                    </div
+                ></td>
+            </tr>
+        }
+    </tbody>
+</table>
+    <a asp-area="Admin" asp-action="Create" asp-controller="Product" class="btn btn-outline-primary">Add Product</a>
+<a asp-area="Admin" asp-action="Index" asp-controller="Home" class="btn btn-outline-secondary">Return</a>

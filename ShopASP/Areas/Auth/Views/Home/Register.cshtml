@@ -1,0 +1,35 @@
+﻿@model RegisterForm
+@{
+	ViewData["Title"] = "Register";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Register</h1>
+</div>
+<div class="row">
+	<div class="col-md-4 offset-md-4">
+		<div class="card">
+			<div class="card-body">
+				<form method="post" enctype="multipart/form-data">
+					<div class="mb-3">
+						@Html.LabelFor(m => m.Login, new { @class = "form-label" })
+						@Html.TextBoxFor(m => m.Login, new { @class = "form-control", placeholder = "E-mail" })
+						@Html.ValidationMessageFor(m => m.Login, "", new { @class = "text-danger" })
+					</div>
+					<div class="mb-3">
+						@Html.LabelFor(m => m.Password, new { @class = "form-label" })
+						@Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
+						@Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+					</div>
+					<div class="mb-3">
+						@Html.LabelFor(m => m.ConfirmPassword, new { @class = "form-label" })
+						@Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "Password" })
+						@Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+					</div>
+					<button class="btn btn-success" type="submit">Register</button>
+					<a asp-area="Auth" asp-action="Login" asp-controller="Home" class="btn btn-outline-primary">Login</a>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

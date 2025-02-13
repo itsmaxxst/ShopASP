@@ -1,0 +1,351 @@
+﻿@model Product
+@{
+    ViewData["Title"] = "Product";
+}
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        @if (@User.IsInRole("Admin"))
+        {
+            <body class="main-layout inner_posituong">
+            <header>
+                <!-- header inner -->
+                <div class="header">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col logo_section">
+                                <div class="full">
+                                    <div class="center-desk">
+                                        <div class="logo">
+                                            <a><img src="~/images/logo.png" alt="#" /></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9">
+                                <nav class="navigation navbar navbar-expand-md navbar-dark ">
+                                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+                                        <span class="navbar-toggler-icon"></span>
+                                    </button>
+                                    <div class="collapse navbar-collapse" id="navbarsExample04">
+                                        <ul class="navbar-nav mr-auto">
+                                            <li class="nav-item active">
+                                                <a class="nav-link" href="~/Home">Home</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" asp-area="Admin" asp-controller="Category" asp-action="Index">Categories</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link">About</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link">Contact Us</a>
+                                            </li>
+                                        </ul>
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            <ul class="navbar-nav justify-content-end flex-grow-1">
+                                                <li class="nav-item dropdown">
+                                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                                                        @if (@User.IsInRole("Admin"))
+                                                        {
+                                                            <span>Admin</span>
+                                                        }
+                                                        else if (@User.IsInRole("User"))
+                                                        {
+                                                            <span>User</span>
+                                                        }
+                                                    </a>
+                                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                        <li>
+                                                            <a class="dropdown-item" asp-controller="Profile" asp-action="Index">Profile</a>
+                                                        </li>
+                                                        @if (User.IsInRole("Admin"))
+                                                        {
+                                                            <li>
+                                                                <a class="dropdown-item" asp-area="Auth" asp-controller="User" asp-action="Index">Users</a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="dropdown-item" asp-area="Auth" asp-controller="User" asp-action="Roles">Roles</a>
+                                                            </li>
+                                                        }
+                                                        <li><hr class="dropdown-divider" /></li>
+                                                        <li>
+                                                            <a class="dropdown-item" asp-area="Auth" asp-controller="Home" asp-action="Logout">Logout</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <div class="nav-link">@User.Identity.Name</div>
+                                                </li>
+                                            </ul>
+                                        }
+                                        else
+                                        {
+                                            <ul class="navbar-nav justify-content-end flex-grow-1">
+                                                <li class="nav-item">
+                                                    <a class="nav-link" asp-action="Register" asp-controller="Home" asp-area="Auth">Register</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" asp-area="Auth" asp-controller="Home" asp-action="Login" asp-all-route-data='new Dictionary<string,string>(){{"returnUrl","/"}}'>Login</a>
+                                                </li>
+                                            </ul>
+                                        }
+                                    </div>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+         </body>
+        }
+        else if (@User.IsInRole("User"))
+        {
+            <body class="main-layout inner_posituong">
+                <!-- loader  -->
+                <div class="loader_bg">
+                <div class="loader"><img src="~/images/loading.gif" alt="#" /></div>
+                </div>
+                <!-- end loader -->
+                <!-- header -->
+            <header>
+                <!-- header inner -->
+                <div class="header">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col logo_section">
+                                <div class="full">
+                                    <div class="center-desk">
+                                        <div class="logo">
+                                            <a><img src="~/images/logo.png" alt="#" /></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9">
+                                <nav class="navigation navbar navbar-expand-md navbar-dark ">
+                                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+                                        <span class="navbar-toggler-icon"></span>
+                                    </button>
+                                    <div class="collapse navbar-collapse" id="navbarsExample04">
+                                        <ul class="navbar-nav mr-auto">
+                                            <li class="nav-item active">
+                                                <a class="nav-link" href="~/Home">Home</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" asp-area="Admin" asp-controller="Category" asp-action="Index">Categories</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link">About</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link">Contact Us</a>
+                                            </li>
+                                        </ul>
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            <ul class="navbar-nav justify-content-end flex-grow-1">
+                                                <li class="nav-item dropdown">
+                                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                                                        @if (@User.IsInRole("Admin"))
+                                                        {
+                                                            <span>Admin</span>
+                                                        }
+                                                        else if (@User.IsInRole("User"))
+                                                        {
+                                                            <span>User</span>
+                                                        }
+                                                    </a>
+                                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                        <li>
+                                                            <a class="dropdown-item" asp-controller="Profile" asp-action="Index">Profile</a>
+                                                        </li>
+                                                        @if (User.IsInRole("Admin"))
+                                                        {
+                                                            <li>
+                                                                <a class="dropdown-item" asp-area="Auth" asp-controller="User" asp-action="Index">Users</a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="dropdown-item" asp-area="Auth" asp-controller="User" asp-action="Roles">Roles</a>
+                                                            </li>
+                                                        }
+                                                        <li><hr class="dropdown-divider" /></li>
+                                                        <li>
+                                                            <a class="dropdown-item" asp-area="Auth" asp-controller="Home" asp-action="Logout">Logout</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <div class="nav-link">@User.Identity.Name</div>
+                                                </li>
+                                                @if (@User.IsInRole("User"))
+                                                {
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" asp-area="Auth" asp-controller="Home" asp-action="Cart">Cart</a>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        }
+                                        else
+                                        {
+                                            <ul class="navbar-nav justify-content-end flex-grow-1">
+                                                <li class="nav-item">
+                                                    <a class="nav-link" asp-action="Register" asp-controller="Home" asp-area="Auth">Register</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" asp-area="Auth" asp-controller="Home" asp-action="Login" asp-all-route-data='new Dictionary<string,string>(){{"returnUrl","/"}}'>Login</a>
+                                                </li>
+                                            </ul>
+                                        }
+                                    </div>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+                <!-- end header inner -->
+                <!-- end header -->
+                <!-- products -->
+            <div class="laptop1">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div class="laptop1_img">
+                                @if (Model.Photo != null)
+                                {
+                                    <img class="img-fluid" src="@Model.Photo.Url" alt="@Model.Title" title="@Model.Title" />
+                                }
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="titlepage">
+                                <h2>@Model.Title</h2>
+                                <p>Description: @Model.Description</p>
+                                <h3>Price: @Model.Price</h3>
+                                <a class="read_more" href="#" data-product-id="@Model.Id" onclick="addToCart(this)">Add to cart</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <!-- end products -->
+                <!--  footer -->
+            <footer>
+                <div class="footer">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
+                                <img class="logo1" src="~/images/logo1.png" alt="#" />
+                                <ul class="social_icon">
+                                    <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
+                                <h3>About Us</h3>
+                                <ul class="about_us">
+                                    <li>dolor sit amet, consectetur<br> magna aliqua. Ut enim ad <br>minim veniam, <br> quisdotempor incididunt r</li>
+                                </ul>
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
+                                <h3>Contact Us</h3>
+                                <ul class="conta">
+                                    <li>dolor sit amet,<br> consectetur <br>magna aliqua.<br> quisdotempor <br>incididunt ut e </li>
+                                </ul>
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
+                                <form class="bottom_form">
+                                    <h3>Newsletter</h3>
+                                    <input class="enter" placeholder="Enter your email" type="text" name="Enter your email">
+                                    <button class="sub_btn">subscribe</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="copyright">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>© 2019 All Rights Reserved. Design by<a href="https://html.design/"> Free Html Templates</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+                <!-- end footer -->
+                <!-- Javascript files-->
+                <script src="js/jquery.min.js"></script>
+                <script src="js/popper.min.js"></script>
+                <script src="js/bootstrap.bundle.min.js"></script>
+                <script src="js/jquery-3.0.0.min.js"></script>
+                <!-- sidebar -->
+                <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+                <script src="js/custom.js"></script>
+            </body>
+        }
+    }
+    else
+    {
+        <div class="text-center" style="margin-bottom:10px">
+            <h1 class="display-4">Login or register</h1>
+            <h2 class="display-4">to get acces to the categories</h2>
+            <a asp-area="Auth" asp-action="Register" asp-controller="Home" class="btn btn-outline-primary">Register</a>
+            <a asp-area="Auth" asp-action="Login" asp-controller="Home" class="btn btn-outline-secondary">Login</a>
+        </div>
+    <footer>
+        <div class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
+                        <img class="logo1" src="~/images/logo1.png" alt="#" />
+                        <ul class="social_icon">
+                            <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
+                        <h3>About Us</h3>
+                        <ul class="about_us">
+                            <li>dolor sit amet, consectetur<br> magna aliqua. Ut enim ad <br>minim veniam, <br> quisdotempor incididunt r</li>
+                        </ul>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
+                        <h3>Contact Us</h3>
+                        <ul class="conta">
+                            <li>dolor sit amet,<br> consectetur <br>magna aliqua.<br> quisdotempor <br>incididunt ut e </li>
+                        </ul>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
+                        <form class="bottom_form">
+                            <h3>Newsletter</h3>
+                            <input class="enter" placeholder="Enter your email" type="text" name="Enter your email">
+                            <button class="sub_btn">subscribe</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p>© 2019 All Rights Reserved. Design by<a href="https://html.design/"> Free Html Templates</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    }
+<script>
+    function addToCart(button) {
+        var productId = button.getAttribute("data-product-id");
+        window.location.href = '/Home/AddToCart?productId=' + productId;
+    }
+</script>

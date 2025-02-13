@@ -1,0 +1,25 @@
+﻿@{
+    ViewData["Title"] = "Admin Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome Admin</h1>
+</div>
+<div class="row">
+    <div class="card">
+        <div class="card-header">Categories</div>
+        <div class="card-body">Manage categories</div>
+        <div class="card-footer">
+            <a asp-area="Admin" asp-controller="Category" asp-action="Index" class="btn btn-outline-primary">Categories</a>
+        </div>
+    </div>
+</div>
+<div style="margin-top: 5px" class="row">
+    <div class="card">
+        <div class="card-header">Products</div>
+        <div class="card-body">Manage products</div>
+        <div class="card-footer">
+            <a asp-area="Admin" asp-controller="Product" asp-action="Index" class="btn btn-outline-primary">Products</a>
+        </div>
+    </div>
+</div>

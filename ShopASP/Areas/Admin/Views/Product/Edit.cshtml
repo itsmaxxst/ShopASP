@@ -1,0 +1,44 @@
+﻿@model Product
+@{
+	ViewData["Title"] = "Edit Product";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Edit Product</h1>
+</div>
+<a asp-area="Admin" asp-action="Index" asp-controller="Product" class="btn btn-outline-secondary">Cancel</a>
+<div class="card">
+	<div class="card-body">
+		<form method="post" enctype="multipart/form-data">
+			<div class="mb-3">
+				@Html.LabelFor(m => m.Title, new { @class = "form-label" })
+				@Html.TextBoxFor(m => m.Title, new { @class = "form-control", placeholder = "Title" })
+				@Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
+			</div>
+			<div class="mb-3">
+				@Html.LabelFor(m => m.Description, new { @class = "form-label" })
+				@Html.TextBoxFor(m => m.Description, new { @class = "form-control", placeholder = "Description" })
+				@Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+			</div>
+			<div class="mb-3">
+				@Html.LabelFor(m => m.Price, new { @class = "form-label" })
+				@Html.TextBoxFor(m => m.Price, new { @class = "form-control", placeholder = "Price" })
+				@Html.ValidationMessageFor(m => m.Price, "", new { @class = "text-danger" })
+			</div>
+			<div class="mb-3">
+				@Html.Label("Category", null, new { @class = "form-label" })
+				<select asp-for="CategoryId" class="form-control">
+					@foreach (var category in ViewBag.Categories as List<ShopASP.Models.Category>)
+					{
+						<option value="@category.Id" selected="@Model.CategoryId == category.Id">@category.Title</option>
+					}
+				</select>
+			</div>
+			<div class="mb-3">
+				@Html.Label("Image", null, new { @class = "form-label" })
+				@Html.TextBox("image", null, new { accept = ".jpg,.png,.jpeg", type = "file", @class = "form-control" })
+			</div>
+			<button class="btn btn-success" type="submit">Save</button>
+		</form>
+	</div>
+</div>

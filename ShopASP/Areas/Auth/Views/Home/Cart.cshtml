@@ -1,0 +1,173 @@
+﻿@model Cart
+@{
+	ViewData["Title"] = "Cart";
+}
+
+<header>
+    <!-- header inner -->
+    <div class="header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col logo_section">
+                    <div class="full">
+                        <div class="center-desk">
+                            <div class="logo">
+                                <a><img src="~/images/logo.png" alt="#" /></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9">
+                    <nav class="navigation navbar navbar-expand-md navbar-dark ">
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarsExample04">
+                            <ul class="navbar-nav mr-auto">
+                                <li class="nav-item active">
+                                    <a class="nav-link" asp-action="Index">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="Admin" asp-controller="Category" asp-action="Index">Categories</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link">About</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link">Contact Us</a>
+                                </li>
+                            </ul>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <ul class="navbar-nav justify-content-end flex-grow-1">
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                                            @if (@User.IsInRole("Admin"))
+                                            {
+                                                <span>Admin</span>
+                                            }
+                                            else if (@User.IsInRole("User"))
+                                            {
+                                                <span>User</span>
+                                            }
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown" data-bs-toggle="dropdown">
+                                            <li>
+                                                <a class="dropdown-item" asp-controller="Profile" asp-action="Index">Profile</a>
+                                            </li>
+                                            @if (User.IsInRole("Admin"))
+                                            {
+                                                <li>
+                                                    <a class="dropdown-item" asp-area="Auth" asp-controller="User" asp-action="Index">Users</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" asp-area="Auth" asp-controller="User" asp-action="Roles">Roles</a>
+                                                </li>
+                                            }
+                                            <li><hr class="dropdown-divider" /></li>
+                                            <li>
+                                                <a class="dropdown-item" asp-area="Auth" asp-controller="Home" asp-action="Logout">Logout</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item">
+                                        <div class="nav-link">@User.Identity.Name</div>
+                                    </li>
+                                    @if (@User.IsInRole("User"))
+                                    {
+                                        <li class="nav-item">
+                                            <a class="nav-link" asp-area="Auth" asp-controller="Home" asp-action="Cart">Cart</a>
+                                        </li>
+                                    }
+                                </ul>
+                            }
+                            else
+                            {
+                                <ul class="navbar-nav justify-content-end flex-grow-1">
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-action="Register" asp-controller="Home" asp-area="Auth">Register</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-area="Auth" asp-controller="Home" asp-action="Login" asp-all-route-data='new Dictionary<string,string>(){{"returnUrl","/"}}'>Login</a>
+                                    </li>
+                                </ul>
+                            }
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<hr />
+<!--  contact -->
+<div class="contact">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="titlepage">
+                    <h2>Cart</h2>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid pt-5">
+            <div class="row px-xl-5">
+                <div class="col-lg-8 table-responsive mb-5">
+                    <form class="main_form">
+                        <h2 class="text-white">Cart</h2>
+                        <table class="table table-striped text-center mb-0">
+                            <thead class="text-white">
+                                <tr>
+                                    <th>Products</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                    <th>Remove</th>
+                                </tr>
+                            </thead>
+                            <tbody class="align-middle text-white">
+                                @foreach (var cartItem in Model.CartItems)
+                                {
+                                    <tr>
+                                        <td>@cartItem.ProductTitle</td>
+                                        <td>@cartItem.ProductPrice.ToString("C")</td>
+                                        <td>
+                                            <form method="post" action="/Home/UpdateCartItemQuantity">
+                                                <input type="hidden" name="productId" value="@cartItem.Id" />
+                                                <input type="number" name="newQuantity" min="1" value="@cartItem.ProductQuantity" onchange="this.form.submit()" />
+                                            </form>
+                                        </td>
+                                        <td>@(cartItem.ProductPrice * cartItem.ProductQuantity).ToString("C")</td>
+                                        <td>
+                                            <a href="/Home/RemoveFromCart?productId=@cartItem.Id">Remove</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+                <div class="col-lg-4">
+                    <form class="main_form">
+                        <h2 class="text-white">Summary</h2>
+                        <div class="text-white">
+                            <table class="table table-striped text-center mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="align-middle text-white">
+                                    <tr>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <button asp-area="Auth" asp-controller="Home" asp-action="Checkout" class="send_btn">Pay</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
